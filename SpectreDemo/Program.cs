@@ -22,22 +22,44 @@ AnsiConsole.Clear();
 // Lesson 04 - Text Prompts
 //int age = AnsiConsole.Ask<int>("What is you age?");
 //bool isHappy = AnsiConsole.Ask<bool>("Are you happy?");
-int age = AnsiConsole.Prompt(
- new TextPrompt<int>("What is your age?")
-     .Validate((x) => x switch
-     {
-         < 0 => ValidationResult.Error("You were not born yet"),
-         > 120 => ValidationResult.Error("You are too old"),
-         _ => ValidationResult.Success()
-     })
+// int age = AnsiConsole.Prompt(
+//     new TextPrompt<int>("What is your age?")
+//         .Validate((x) => x switch
+//         {
+//             < 0 => ValidationResult.Error("You were not born yet"),
+//             > 120 => ValidationResult.Error("You are too old"),
+//             _ => ValidationResult.Success()
+//         })
+// );
+// string happyText = AnsiConsole.Prompt(
+//     new TextPrompt<string>("Are you happy")
+//         .AddChoice("yes")
+//         .AddChoice("no")
+//         .DefaultValue("yes")
+// );
+// AnsiConsole.MarkupLine($"Happy: {happyText}\nAge: {age}\n");
+
+// Lesson 05 - Item Selections
+List<string> names =
+[
+    "Zara Blackwood",
+    "Felix Northstar",
+    "Luna Silverbrook",
+    "Kai Winters",
+    "Aurora Vale",
+    "Atlas Thorne\n"
+];
+
+string favoriteName = AnsiConsole.Prompt(
+    new SelectionPrompt<string>()
+        .Title("which is your favorite placeholder name?")
+        .PageSize(4)
+        .MoreChoicesText("[grey](move down to reveal more choices)[/]")
+        .AddChoices(names)
+
 );
-string happyText = AnsiConsole.Prompt(
- new TextPrompt<string>("Are you happy")
-     .AddChoice("yes")
-     .AddChoice("no")
-     .DefaultValue("yes")
-);
-AnsiConsole.MarkupLine($"Happy: {happyText}\nAge: {age}\n");
+
+AnsiConsole.MarkupLine($"Your favorite name is [red]{favoriteName}[/].");
 
 AnsiConsole.MarkupLine("");
 
