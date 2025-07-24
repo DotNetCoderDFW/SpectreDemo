@@ -40,6 +40,28 @@ AnsiConsole.Clear();
 // AnsiConsole.MarkupLine($"Happy: {happyText}\nAge: {age}\n");
 
 // Lesson 05 - Item Selections
+// List<string> names =
+// [
+//     "Zara Blackwood",
+//     "Felix Northstar",
+//     "Luna Silverbrook",
+//     "Kai Winters",
+//     "Aurora Vale",
+//     "Atlas Thorne\n"
+// ];
+//
+// string favoriteName = AnsiConsole.Prompt(
+//     new SelectionPrompt<string>()
+//         .Title("which is your favorite placeholder name?")
+//         .PageSize(4)
+//         .MoreChoicesText("[grey](move down to reveal more choices)[/]")
+//         .AddChoices(names)
+//
+// );
+//
+// AnsiConsole.MarkupLine($"Your favorite name is [red]{favoriteName}[/].");
+
+//Lesson 06 - Multi Selects
 List<string> names =
 [
     "Zara Blackwood",
@@ -50,17 +72,26 @@ List<string> names =
     "Atlas Thorne\n"
 ];
 
-string favoriteName = AnsiConsole.Prompt(
-    new SelectionPrompt<string>()
-        .Title("which is your favorite placeholder name?")
-        .PageSize(4)
-        .MoreChoicesText("[grey](move down to reveal more choices)[/]")
-        .AddChoices(names)
+List<string> familyNames =
+[
+    "Charity",
+    "Jon",
+    "Chris"
+];
 
+List<string> favoriteName = AnsiConsole.Prompt(
+    new MultiSelectionPrompt<string>()
+        .Title("Which are your favorite placeholder names?")
+        .InstructionsText("Press <space> to toggle, <enter> to accept")
+        //.AddChoices(names)
+        .AddChoiceGroup("Usual Names", names)
+        .AddChoiceGroup("Family Names", familyNames)
 );
 
-AnsiConsole.MarkupLine($"Your favorite name is [red]{favoriteName}[/].");
-
+foreach (string name in favoriteName)
+{
+    Console.WriteLine(name);
+}
 AnsiConsole.MarkupLine("");
 
 
