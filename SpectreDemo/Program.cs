@@ -62,36 +62,67 @@ AnsiConsole.Clear();
 // AnsiConsole.MarkupLine($"Your favorite name is [red]{favoriteName}[/].");
 
 //Lesson 06 - Multi Selects
-List<string> names =
+// List<string> names =
+// [
+//     "Zara Blackwood",
+//     "Felix Northstar",
+//     "Luna Silverbrook",
+//     "Kai Winters",
+//     "Aurora Vale",
+//     "Atlas Thorne\n"
+// ];
+//
+// List<string> familyNames =
+// [
+//     "Charity",
+//     "Jon",
+//     "Chris"
+// ];
+//
+// List<string> favoriteName = AnsiConsole.Prompt(
+//     new MultiSelectionPrompt<string>()
+//         .Title("Which are your favorite placeholder names?")
+//         .InstructionsText("Press <space> to toggle, <enter> to accept")
+//         //.AddChoices(names)
+//         .AddChoiceGroup("Usual Names", names)
+//         .AddChoiceGroup("Family Names", familyNames)
+// );
+//
+// foreach (string name in favoriteName)
+// {
+//     Console.WriteLine(name);
+// }
+
+//Lesson 07 - Tables
+
+List<Text> person =
 [
-    "Zara Blackwood",
-    "Felix Northstar",
-    "Luna Silverbrook",
-    "Kai Winters",
-    "Aurora Vale",
-    "Atlas Thorne\n"
+    new("Bilbo"),
+    new("Baggins"),
+    new("111")
 ];
 
-List<string> familyNames =
-[
-    "Charity",
-    "Jon",
-    "Chris"
-];
+Table table = new();
+table.Centered();
+//table.Expand();
+table.Border(TableBorder.Rounded);
+table.ShowRowSeparators();
 
-List<string> favoriteName = AnsiConsole.Prompt(
-    new MultiSelectionPrompt<string>()
-        .Title("Which are your favorite placeholder names?")
-        .InstructionsText("Press <space> to toggle, <enter> to accept")
-        //.AddChoices(names)
-        .AddChoiceGroup("Usual Names", names)
-        .AddChoiceGroup("Family Names", familyNames)
-);
+table.AddColumn("First Name");
+table.AddColumn("Last Name");
+table.AddColumn("Age");
 
-foreach (string name in favoriteName)
-{
-    Console.WriteLine(name);
-}
+table.Columns[0].PadLeft(5).PadRight(5);
+table.Columns[1].Width(15);
+table.Columns[1].RightAligned();
+
+
+table.AddRow("Tim", "Corey", "46");
+table.AddRow("Sue", "Storm", "23");
+table.AddRow(person);
+
+AnsiConsole.Write(table);
+
 AnsiConsole.MarkupLine("");
 
 
