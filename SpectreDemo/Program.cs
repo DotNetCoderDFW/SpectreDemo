@@ -95,33 +95,56 @@ AnsiConsole.Clear();
 
 //Lesson 07 - Tables
 
-List<Text> person =
+// List<Text> person =
+// [
+//     new("Bilbo"),
+//     new("Baggins"),
+//     new("111")
+// ];
+//
+// Table table = new();
+// table.Centered();
+// //table.Expand();
+// table.Border(TableBorder.Rounded);
+// table.ShowRowSeparators();
+//
+// table.AddColumn("First Name");
+// table.AddColumn("Last Name");
+// table.AddColumn("Age");
+//
+// table.Columns[0].PadLeft(5).PadRight(5);
+// table.Columns[1].Width(15);
+// table.Columns[1].RightAligned();
+//
+//
+// table.AddRow("Tim", "Corey", "46");
+// table.AddRow("Sue", "Storm", "23");
+// table.AddRow(person);
+//
+// AnsiConsole.Write(table);
+
+//Lesson 08 - Panels
+
+List<string> names =
 [
-    new("Bilbo"),
-    new("Baggins"),
-    new("111")
+    "Zara Blackwood",
+    "Felix Northstar",
+    "[red]Luna Silverbrook[/]",
+    "Kai Winters",
+    "Aurora Vale",
+    "Atlas Thorne"
 ];
-
-Table table = new();
-table.Centered();
-//table.Expand();
-table.Border(TableBorder.Rounded);
-table.ShowRowSeparators();
-
-table.AddColumn("First Name");
-table.AddColumn("Last Name");
-table.AddColumn("Age");
-
-table.Columns[0].PadLeft(5).PadRight(5);
-table.Columns[1].Width(15);
-table.Columns[1].RightAligned();
+string panelInfo = string.Join("\n", names);
 
 
-table.AddRow("Tim", "Corey", "46");
-table.AddRow("Sue", "Storm", "23");
-table.AddRow(person);
+Panel panel = new(new Markup(panelInfo).Centered());
+//Panel panel = new(panelInfo);
 
-AnsiConsole.Write(table);
+panel.Border = BoxBorder.Rounded;
+panel.Padding = new (2, 1, 2, 1);
+panel.Header("Default Names");
+
+AnsiConsole.Write(panel);
 
 AnsiConsole.MarkupLine("");
 
