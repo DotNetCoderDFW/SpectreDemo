@@ -124,27 +124,37 @@ AnsiConsole.Clear();
 // AnsiConsole.Write(table);
 
 //Lesson 08 - Panels
+//
+// List<string> names =
+// [
+//     "Zara Blackwood",
+//     "Felix Northstar",
+//     "[red]Luna Silverbrook[/]",
+//     "Kai Winters",
+//     "Aurora Vale",
+//     "Atlas Thorne"
+// ];
+// string panelInfo = string.Join("\n", names);
+//
+//
+// Panel panel = new(new Markup(panelInfo).Centered());
+// //Panel panel = new(panelInfo);
+//
+// panel.Border = BoxBorder.Rounded;
+// panel.Padding = new (2, 1, 2, 1);
+// panel.Header("Default Names");
+//
+// AnsiConsole.Write(panel);
 
-List<string> names =
-[
-    "Zara Blackwood",
-    "Felix Northstar",
-    "[red]Luna Silverbrook[/]",
-    "Kai Winters",
-    "Aurora Vale",
-    "Atlas Thorne"
-];
-string panelInfo = string.Join("\n", names);
+//Lesson 09 - FIGlet Text
 
+AnsiConsole.Write(new FigletText("Hello").Centered().Color(color: Color.Red));
 
-Panel panel = new(new Markup(panelInfo).Centered());
-//Panel panel = new(panelInfo);
+FigletText figlet = new("World");
+figlet.Centered();
+figlet.Color = Color.Red;
 
-panel.Border = BoxBorder.Rounded;
-panel.Padding = new (2, 1, 2, 1);
-panel.Header("Default Names");
-
-AnsiConsole.Write(panel);
+AnsiConsole.Write(figlet);
 
 AnsiConsole.MarkupLine("");
 
