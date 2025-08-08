@@ -1,4 +1,6 @@
 ﻿using Spectre.Console;
+using Spectre.Console.Json;
+using SpectreDemo;
 
 AnsiConsole.Clear();
 
@@ -148,14 +150,30 @@ AnsiConsole.Clear();
 
 //Lesson 09 - FIGlet Text
 
-AnsiConsole.Write(new FigletText("Hello").Centered().Color(color: Color.Red));
+// AnsiConsole.Write(new FigletText("Hello").Centered().Color(color: Color.Red));
+//
+// FigletText figlet = new("World");
+// figlet.Centered();
+// figlet.Color = Color.Red;
+//
+// AnsiConsole.Write(figlet);
 
-FigletText figlet = new("World");
-figlet.Centered();
-figlet.Color = Color.Red;
+// Lesson 10 - Displaying JSON
+string jsonResponse = await Helpers.FetchApiDataAsync(
+    "https://jsonplaceholder.typicode.com/users"
+);
 
-AnsiConsole.Write(figlet);
+JsonText json = new(jsonResponse);
 
+json.StringColor(Color.Yellow);
+json.ColonColor(Color.Orange1);
+
+AnsiConsole.Write(
+    new Panel(json)
+        .Header("API Response")
+        .Collapse()
+        .BorderColor(Color.White)
+    );
 AnsiConsole.MarkupLine("");
 
 
