@@ -159,21 +159,41 @@ AnsiConsole.Clear();
 // AnsiConsole.Write(figlet);
 
 // Lesson 10 - Displaying JSON
-string jsonResponse = await Helpers.FetchApiDataAsync(
-    "https://jsonplaceholder.typicode.com/users"
-);
+// string jsonResponse = await Helpers.FetchApiDataAsync(
+//     "https://jsonplaceholder.typicode.com/users"
+// );
+//
+// JsonText json = new(jsonResponse);
+//
+// json.StringColor(Color.Yellow);
+// json.ColonColor(Color.Orange1);
+//
+// AnsiConsole.Write(
+//     new Panel(json)
+//         .Header("API Response")
+//         .Collapse()
+//         .BorderColor(Color.White)
+//     );
 
-JsonText json = new(jsonResponse);
 
-json.StringColor(Color.Yellow);
-json.ColonColor(Color.Orange1);
+//Lesson 11 - Status Messages
 
-AnsiConsole.Write(
-    new Panel(json)
-        .Header("API Response")
-        .Collapse()
-        .BorderColor(Color.White)
-    );
+await AnsiConsole.Status()
+    .StartAsync("Loading...", async ctx =>
+    {
+        ctx.Spinner(Spinner.Known.Aesthetic);
+        for (int i = 1; i < 21; i++)
+        {
+            ctx.Status($"Download course {i}...");
+            string jsonResponse = await Helpers.FetchApiDataAsync(
+                $"https://jsonplaceholder.typicode.com/posts/{i}"
+            );
+            AnsiConsole.MarkupLine($"Course [red]{i}[/] downloaded.");
+        }
+        ctx.Status("Done!");
+    });
+
+
 AnsiConsole.MarkupLine("");
 
 
