@@ -178,22 +178,44 @@ AnsiConsole.Clear();
 
 //Lesson 11 - Status Messages
 
-await AnsiConsole.Status()
-    .StartAsync("Loading...", async ctx =>
+// await AnsiConsole.Status()
+//     .StartAsync("Loading...", async ctx =>
+//     {
+//         ctx.Spinner(Spinner.Known.Aesthetic);
+//         for (int i = 1; i < 21; i++)
+//         {
+//             ctx.Status($"Download course {i}...");
+//             string jsonResponse = await Helpers.FetchApiDataAsync(
+//                 $"https://jsonplaceholder.typicode.com/posts/{i}"
+//             );
+//             AnsiConsole.MarkupLine($"Course [red]{i}[/] downloaded.");
+//         }
+//         ctx.Status("Done!");
+//     });
+//
+//
+
+
+// Lesson 12 - Progress Bars
+
+await AnsiConsole.Progress().AutoClear(true)
+    .StartAsync(async ctx =>
     {
-        ctx.Spinner(Spinner.Known.Aesthetic);
-        for (int i = 1; i < 21; i++)
+        var task1 = ctx.AddTask("Downloading Data");
+        var task2 = ctx.AddTask("Installing Application");
+        var task3 = ctx.AddTask("Data Cleanup");
+
+        while (ctx.IsFinished == false)
         {
-            ctx.Status($"Download course {i}...");
-            string jsonResponse = await Helpers.FetchApiDataAsync(
-                $"https://jsonplaceholder.typicode.com/posts/{i}"
-            );
-            AnsiConsole.MarkupLine($"Course [red]{i}[/] downloaded.");
+            //Thread.Sleep(500);
+            await Task.Delay(500);
+            task1.Increment(Random.Shared.NextDouble() * 25);
+            task2.Increment(Random.Shared.NextDouble() * 18);
+            if (task2.Percentage > 80)
+            {
+                task3.Increment(Random.Shared.NextDouble() * 20);
+            }
         }
-        ctx.Status("Done!");
     });
 
-
 AnsiConsole.MarkupLine("");
-
-
