@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using System.Globalization;
+using Spectre.Console;
 using Spectre.Console.Json;
 using SpectreDemo;
 
@@ -198,24 +199,59 @@ AnsiConsole.Clear();
 
 // Lesson 12 - Progress Bars
 
-await AnsiConsole.Progress().AutoClear(true)
+// await AnsiConsole.Progress().AutoClear(true)
+//     .StartAsync(async ctx =>
+//     {
+//         var task1 = ctx.AddTask("Downloading Data");
+//         var task2 = ctx.AddTask("Installing Application");
+//         var task3 = ctx.AddTask("Data Cleanup");
+//
+//         while (ctx.IsFinished == false)
+//         {
+//             //Thread.Sleep(500);
+//             await Task.Delay(500);
+//             task1.Increment(Random.Shared.NextDouble() * 25);
+//             task2.Increment(Random.Shared.NextDouble() * 18);
+//             if (task2.Percentage > 80)
+//             {
+//                 task3.Increment(Random.Shared.NextDouble() * 20);
+//             }
+//         }
+//     });
+
+// Lesson 13 - Live Displays
+
+List<CourseInfo> courses = new();
+
+var table = new Table().Centered();
+
+table.AddColumn("Title");
+table.AddColumn("Lessons");
+table.AddColumn("Hours");
+table.ShowFooters();
+
+await AnsiConsole.Live(table)
     .StartAsync(async ctx =>
     {
-        var task1 = ctx.AddTask("Downloading Data");
-        var task2 = ctx.AddTask("Installing Application");
-        var task3 = ctx.AddTask("Data Cleanup");
-
-        while (ctx.IsFinished == false)
+        for (int i = 1; i < 32; i++)
         {
-            //Thread.Sleep(500);
-            await Task.Delay(500);
-            task1.Increment(Random.Shared.NextDouble() * 25);
-            task2.Increment(Random.Shared.NextDouble() * 18);
-            if (task2.Percentage > 80)
-            {
-                task3.Increment(Random.Shared.NextDouble() * 20);
-            }
+            CourseInfo course = await Helpers.GetTypedApiDataAsync<CourseInfo>(
+                $"https://thesampleapi.com/courses/{i}");
+            courses.Add(course);
+
+            table.AddRow(
+                course.CourseName, 
+                course.CourseLessonCount.ToString(), 
+                course.CourseLengthInHours.ToString());
+
+            table.Columns[0].Footer($"Count: {courses.Count}");
+            table.Columns[1].Footer(courses.Sum(x => x.CourseLessonCount).ToString());
+            table.Columns[2].Footer(courses.Sum(x => x.CourseLengthInHours).ToString(CultureInfo.InvariantCulture));
+            
+            ctx.Refresh();
         }
     });
+
+
 
 AnsiConsole.MarkupLine("");
