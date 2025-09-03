@@ -220,38 +220,48 @@ AnsiConsole.Clear();
 //     });
 
 // Lesson 13 - Live Displays
+//
+// List<CourseInfo> courses = new();
+//
+// var table = new Table().Centered();
+//
+// table.AddColumn("Title");
+// table.AddColumn("Lessons");
+// table.AddColumn("Hours");
+// table.ShowFooters();
+//
+// await AnsiConsole.Live(table)
+//     .StartAsync(async ctx =>
+//     {
+//         for (int i = 1; i < 32; i++)
+//         {
+//             CourseInfo course = await Helpers.GetTypedApiDataAsync<CourseInfo>(
+//                 $"https://thesampleapi.com/courses/{i}");
+//             courses.Add(course);
+//
+//             table.AddRow(
+//                 course.CourseName, 
+//                 course.CourseLessonCount.ToString(), 
+//                 course.CourseLengthInHours.ToString());
+//
+//             table.Columns[0].Footer($"Count: {courses.Count}");
+//             table.Columns[1].Footer(courses.Sum(x => x.CourseLessonCount).ToString());
+//             table.Columns[2].Footer(courses.Sum(x => x.CourseLengthInHours).ToString(CultureInfo.InvariantCulture));
+//             
+//             ctx.Refresh();
+//         }
+//     });
+//
 
-List<CourseInfo> courses = new();
+// Lesson 14 - Emojis
 
-var table = new Table().Centered();
+AnsiConsole.MarkupLine("I like :baseball: and :american_football:");
 
-table.AddColumn("Title");
-table.AddColumn("Lessons");
-table.AddColumn("Hours");
-table.ShowFooters();
+AnsiConsole.WriteLine($"Hello {Emoji.Known.WorldMap}");
 
-await AnsiConsole.Live(table)
-    .StartAsync(async ctx =>
-    {
-        for (int i = 1; i < 32; i++)
-        {
-            CourseInfo course = await Helpers.GetTypedApiDataAsync<CourseInfo>(
-                $"https://thesampleapi.com/courses/{i}");
-            courses.Add(course);
+string displayText = "I am totally normal. :zany_face:\n";
 
-            table.AddRow(
-                course.CourseName, 
-                course.CourseLessonCount.ToString(), 
-                course.CourseLengthInHours.ToString());
-
-            table.Columns[0].Footer($"Count: {courses.Count}");
-            table.Columns[1].Footer(courses.Sum(x => x.CourseLessonCount).ToString());
-            table.Columns[2].Footer(courses.Sum(x => x.CourseLengthInHours).ToString(CultureInfo.InvariantCulture));
-            
-            ctx.Refresh();
-        }
-    });
-
-
+AnsiConsole.Write(new Markup(displayText));
+AnsiConsole.WriteLine(Emoji.Replace(displayText));
 
 AnsiConsole.MarkupLine("");
