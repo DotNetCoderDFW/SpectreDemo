@@ -254,14 +254,22 @@ AnsiConsole.Clear();
 //
 
 // Lesson 14 - Emojis
+//
+// AnsiConsole.MarkupLine("I like :baseball: and :american_football:");
+//
+// AnsiConsole.WriteLine($"Hello {Emoji.Known.WorldMap}");
+//
+// string displayText = "I am totally normal. :zany_face:\n";
+//
+// AnsiConsole.Write(new Markup(displayText));
+// AnsiConsole.WriteLine(Emoji.Replace(displayText));
 
-AnsiConsole.MarkupLine("I like :baseball: and :american_football:");
+// Lesson 15 - Custom Spinners
 
-AnsiConsole.WriteLine($"Hello {Emoji.Known.WorldMap}");
-
-string displayText = "I am totally normal. :zany_face:\n";
-
-AnsiConsole.Write(new Markup(displayText));
-AnsiConsole.WriteLine(Emoji.Replace(displayText));
+AnsiConsole.Status().Spinner(new TestSpinner())
+    .Start("Loading...", ctx =>
+    {
+        Thread.Sleep(10000);
+    });
 
 AnsiConsole.MarkupLine("");
